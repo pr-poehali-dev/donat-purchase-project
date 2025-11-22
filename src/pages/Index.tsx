@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
@@ -15,6 +15,7 @@ interface DonateItem {
   price: number;
   discount?: number;
   icon: string;
+  image: string;
   rarity: 'common' | 'rare' | 'epic' | 'legendary';
 }
 
@@ -52,6 +53,7 @@ const donateItems: DonateItem[] = [
     price: 499,
     discount: 10,
     icon: 'Crown',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/5482be6c-6d27-4051-8f5f-4ca012806e4e.jpg',
     rarity: 'legendary',
   },
   {
@@ -60,6 +62,7 @@ const donateItems: DonateItem[] = [
     description: '1000 кристаллов + 5000 золота',
     price: 299,
     icon: 'Gem',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/cd411cb4-4a83-43a7-ac44-f0707f30a3de.jpg',
     rarity: 'epic',
   },
   {
@@ -69,6 +72,7 @@ const donateItems: DonateItem[] = [
     price: 199,
     discount: 15,
     icon: 'Package',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/ba2f1663-3e41-422b-94ae-5b0cf08182d0.jpg',
     rarity: 'rare',
   },
   {
@@ -77,6 +81,7 @@ const donateItems: DonateItem[] = [
     description: 'x2 опыта на 7 дней',
     price: 149,
     icon: 'Zap',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/2c1721ec-6b74-4b3a-a81f-4bdb57c78fba.jpg',
     rarity: 'rare',
   },
   {
@@ -85,6 +90,7 @@ const donateItems: DonateItem[] = [
     description: 'Идеально для новичков',
     price: 99,
     icon: 'Gift',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/42a3e72e-0b50-4fcb-bfd7-82334d28f75c.jpg',
     rarity: 'common',
   },
   {
@@ -93,6 +99,7 @@ const donateItems: DonateItem[] = [
     description: 'Уникальный облик персонажа',
     price: 599,
     icon: 'Sparkles',
+    image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/924d195c-ccdd-4c69-b3d1-100176e0d0c9.jpg',
     rarity: 'legendary',
   },
 ];
@@ -407,78 +414,54 @@ export default function Index() {
           </p>
         </div>
 
-        <Tabs defaultValue="all" className="mb-8">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-5 bg-[hsl(var(--game-card))] border border-primary/20">
-            <TabsTrigger value="all">Все</TabsTrigger>
-            <TabsTrigger value="legendary">
-              <Icon name="Sparkles" size={16} />
-            </TabsTrigger>
-            <TabsTrigger value="epic">
-              <Icon name="Gem" size={16} />
-            </TabsTrigger>
-            <TabsTrigger value="rare">
-              <Icon name="Star" size={16} />
-            </TabsTrigger>
-            <TabsTrigger value="common">
-              <Icon name="Circle" size={16} />
-            </TabsTrigger>
-          </TabsList>
-
-          {(['all', 'legendary', 'epic', 'rare', 'common'] as const).map((rarity) => (
-            <TabsContent key={rarity} value={rarity} className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {donateItems
-                  .filter((item) => rarity === 'all' || item.rarity === rarity)
-                  .map((item, index) => (
-                    <Card
-                      key={item.id}
-                      className={`bg-gradient-to-br from-[hsl(var(--game-card))] to-[hsl(var(--game-dark))] border-2 border-${item.rarity === 'legendary' ? 'orange' : item.rarity === 'epic' ? 'purple' : item.rarity === 'rare' ? 'blue' : 'gray'}-500/30 hover:border-${item.rarity === 'legendary' ? 'orange' : item.rarity === 'epic' ? 'purple' : item.rarity === 'rare' ? 'blue' : 'gray'}-500/60 transition-all duration-300 ${rarityGlow[item.rarity]} animate-slide-in`}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <CardHeader>
-                        <div className="flex items-start justify-between mb-3">
-                          <div
-                            className={`w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center ${rarityGlow[item.rarity]} transition-all duration-300`}
-                          >
-                            <Icon name={item.icon} size={32} className="text-white" />
-                          </div>
-                          <Badge className={`${rarityColors[item.rarity]} text-white border-0 capitalize`}>
-                            {item.rarity}
-                          </Badge>
-                        </div>
-                        <CardTitle className="text-xl">{item.title}</CardTitle>
-                        <CardDescription className="text-muted-foreground">{item.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center gap-2 mb-4">
-                          <span className="text-3xl font-bold text-primary">
-                            {(item.discount ? item.price * (1 - item.discount / 100) : item.price).toFixed(0)} ₽
-                          </span>
-                          {item.discount && (
-                            <>
-                              <span className="text-lg line-through text-muted-foreground">{item.price} ₽</span>
-                              <Badge variant="destructive" className="ml-auto bg-secondary">
-                                -{item.discount}%
-                              </Badge>
-                            </>
-                          )}
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button
-                          onClick={() => addToCart(item)}
-                          className="w-full gradient-game hover:opacity-90 text-white font-semibold"
-                        >
-                          <Icon name="ShoppingCart" size={18} className="mr-2" />
-                          В корзину
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {donateItems.map((item, index) => (
+            <Card
+              key={item.id}
+              className={`bg-gradient-to-br from-[hsl(var(--game-card))] to-[hsl(var(--game-dark))] border-2 overflow-hidden border-${item.rarity === 'legendary' ? 'orange' : item.rarity === 'epic' ? 'purple' : item.rarity === 'rare' ? 'blue' : 'gray'}-500/30 hover:border-${item.rarity === 'legendary' ? 'orange' : item.rarity === 'epic' ? 'purple' : item.rarity === 'rare' ? 'blue' : 'gray'}-500/60 transition-all duration-300 ${rarityGlow[item.rarity]} animate-slide-in`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                />
+                <Badge className={`absolute top-4 right-4 ${rarityColors[item.rarity]} text-white border-0 capitalize`}>
+                  {item.rarity}
+                </Badge>
+                {item.discount && (
+                  <Badge className="absolute top-4 left-4 bg-secondary text-white border-0 text-lg px-3 py-1">
+                    -{item.discount}%
+                  </Badge>
+                )}
               </div>
-            </TabsContent>
+              <CardHeader>
+                <CardTitle className="text-xl">{item.title}</CardTitle>
+                <CardDescription className="text-muted-foreground">{item.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-3xl font-bold text-primary">
+                    {(item.discount ? item.price * (1 - item.discount / 100) : item.price).toFixed(0)} ₽
+                  </span>
+                  {item.discount && (
+                    <span className="text-lg line-through text-muted-foreground">{item.price} ₽</span>
+                  )}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  onClick={() => addToCart(item)}
+                  className="w-full gradient-game hover:opacity-90 text-white font-semibold"
+                >
+                  <Icon name="ShoppingCart" size={18} className="mr-2" />
+                  В корзину
+                </Button>
+              </CardFooter>
+            </Card>
           ))}
-        </Tabs>
+        </div>
 
         <Card className="mt-12 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 border-primary/30">
           <CardHeader>
