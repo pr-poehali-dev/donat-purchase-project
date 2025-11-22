@@ -449,6 +449,60 @@ export default function Index() {
           ))}
         </div>
 
+        <Card className="max-w-2xl mx-auto bg-gradient-to-br from-[hsl(var(--game-card))] to-[hsl(var(--game-dark))] border-primary/30">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl flex items-center justify-center gap-2">
+              <Icon name="Tag" size={28} className="text-primary" />
+              Есть промокод?
+            </CardTitle>
+            <CardDescription className="text-base">
+              Введи промокод, добавь товары в корзину и получи скидку при оплате
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-3">
+              <Input
+                placeholder="Введи промокод"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                className="bg-background/50 border-primary/30 text-lg h-14"
+              />
+              <Button 
+                onClick={applyPromoCode} 
+                className="gradient-game hover:opacity-90 h-14 px-8"
+              >
+                <Icon name="Check" size={20} className="mr-2" />
+                Применить
+              </Button>
+            </div>
+            {appliedPromo && (
+              <div className="mt-4 p-4 rounded-lg bg-secondary/20 border-2 border-secondary/50 flex items-center justify-between animate-slide-in">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                    <Icon name="Check" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-secondary text-lg">Промокод активирован!</div>
+                    <div className="text-sm text-muted-foreground">
+                      {appliedPromo} - скидка {promoCodes[appliedPromo as keyof typeof promoCodes]}%
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    setAppliedPromo(null);
+                    setPromoCode('');
+                  }}
+                  className="hover:bg-secondary/20"
+                >
+                  <Icon name="X" size={18} />
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
       </main>
 
