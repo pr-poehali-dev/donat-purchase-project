@@ -48,7 +48,7 @@ const rarityGlow = {
 const donateItems: DonateItem[] = [
   {
     id: 1,
-    title: 'VIP Статус',
+    title: 'Legend Silver',
     description: 'Эксклюзивные привилегии на месяц',
     price: 499,
     icon: 'Crown',
