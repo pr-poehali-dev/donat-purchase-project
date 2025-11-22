@@ -51,7 +51,6 @@ const donateItems: DonateItem[] = [
     title: 'VIP Статус',
     description: 'Эксклюзивные привилегии на месяц',
     price: 499,
-    discount: 10,
     icon: 'Crown',
     image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/5482be6c-6d27-4051-8f5f-4ca012806e4e.jpg',
     rarity: 'legendary',
@@ -70,7 +69,6 @@ const donateItems: DonateItem[] = [
     title: 'Премиум кейс',
     description: 'Случайные редкие предметы',
     price: 199,
-    discount: 15,
     icon: 'Package',
     image: 'https://cdn.poehali.dev/projects/0a1a43b8-e98e-4484-8ade-d7af7a871a94/files/ba2f1663-3e41-422b-94ae-5b0cf08182d0.jpg',
     rarity: 'rare',
@@ -148,8 +146,7 @@ export default function Index() {
 
   const calculateTotal = () => {
     const subtotal = cart.reduce((sum, item) => {
-      const itemPrice = item.discount ? item.price * (1 - item.discount / 100) : item.price;
-      return sum + itemPrice * item.quantity;
+      return sum + item.price * item.quantity;
     }, 0);
 
     if (appliedPromo && promoCodes[appliedPromo as keyof typeof promoCodes]) {
@@ -318,11 +315,8 @@ export default function Index() {
                                 <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
                                 <div className="flex items-center gap-2 mb-2">
                                   <span className="text-lg font-bold text-primary">
-                                    {(item.discount ? item.price * (1 - item.discount / 100) : item.price).toFixed(0)} ₽
+                                    {item.price} ₽
                                   </span>
-                                  {item.discount && (
-                                    <span className="text-sm line-through text-muted-foreground">{item.price} ₽</span>
-                                  )}
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <Button
@@ -430,11 +424,6 @@ export default function Index() {
                 <Badge className={`absolute top-4 right-4 ${rarityColors[item.rarity]} text-white border-0 capitalize`}>
                   {item.rarity}
                 </Badge>
-                {item.discount && (
-                  <Badge className="absolute top-4 left-4 bg-secondary text-white border-0 text-lg px-3 py-1">
-                    -{item.discount}%
-                  </Badge>
-                )}
               </div>
               <CardHeader>
                 <CardTitle className="text-xl">{item.title}</CardTitle>
@@ -443,11 +432,8 @@ export default function Index() {
               <CardContent>
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-3xl font-bold text-primary">
-                    {(item.discount ? item.price * (1 - item.discount / 100) : item.price).toFixed(0)} ₽
+                    {item.price} ₽
                   </span>
-                  {item.discount && (
-                    <span className="text-lg line-through text-muted-foreground">{item.price} ₽</span>
-                  )}
                 </div>
               </CardContent>
               <CardFooter>
@@ -463,28 +449,7 @@ export default function Index() {
           ))}
         </div>
 
-        <Card className="mt-12 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 border-primary/30">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Icon name="Tag" size={24} />
-              Активные промокоды
-            </CardTitle>
-            <CardDescription>Используйте промокоды для получения скидки</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {Object.entries(promoCodes).map(([code, discount]) => (
-                <div
-                  key={code}
-                  className="p-4 rounded-lg bg-[hsl(var(--game-card))] border border-primary/20 text-center hover:border-primary/50 transition-all"
-                >
-                  <div className="font-mono text-xl font-bold text-primary mb-2">{code}</div>
-                  <div className="text-sm text-muted-foreground">Скидка {discount}%</div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+
       </main>
 
       <footer className="mt-20 py-8 border-t border-primary/20 bg-[hsl(var(--game-dark))]/50">
