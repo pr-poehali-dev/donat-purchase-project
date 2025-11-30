@@ -64,7 +64,7 @@ const donateItems: DonateItem[] = [
   },
   {
     id: 3,
-    title: 'Премиум кейс',
+    title: 'Legend Gold',
     description: 'Случайные редкие предметы',
     price: 199,
     icon: 'Package',
