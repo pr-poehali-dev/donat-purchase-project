@@ -82,7 +82,7 @@ const donateItems: DonateItem[] = [
   },
   {
     id: 5,
-    title: 'Стартовый набор',
+    title: 'Legend Bronze',
     description: 'Идеально для новичков',
     price: 99,
     icon: 'Gift',
