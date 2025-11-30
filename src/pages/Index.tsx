@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import DonateCard from '@/components/DonateCard';
@@ -255,6 +257,53 @@ export default function Index() {
               rarityGlow={rarityGlow}
             />
           ))}
+        </div>
+
+        <div className="mt-12 max-w-2xl mx-auto space-y-6">
+          <Card className="bg-[hsl(var(--game-card))] border-primary/20">
+            <CardHeader>
+              <CardTitle className="text-lg">Промокод</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Введите промокод"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  className="bg-[hsl(var(--game-dark))] border-primary/20"
+                />
+                <Button onClick={applyPromoCode} variant="outline" className="border-primary/50">
+                  Применить
+                </Button>
+              </div>
+              {appliedPromo && (
+                <div className="text-sm text-green-500 flex items-center gap-2">
+                  <Icon name="Check" size={16} />
+                  Промокод {appliedPromo} применен (-{promoCodes[appliedPromo as keyof typeof promoCodes]}%)
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {cart.length > 0 && (
+            <Card className="bg-gradient-to-br from-primary/20 to-secondary/20 border-primary/30">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Итого к оплате</CardTitle>
+                  <span className="text-3xl font-bold text-primary">{calculateTotal().toFixed(0)} ₽</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={completePurchase}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg py-6"
+                >
+                  <Icon name="CreditCard" size={24} className="mr-2" />
+                  Оформить покупку
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
 
