@@ -73,7 +73,7 @@ const donateItems: DonateItem[] = [
   },
   {
     id: 4,
-    title: 'Ускорение',
+    title: 'Legend Silver',
     description: 'x2 опыта на 7 дней',
     price: 149,
     icon: 'Zap',
