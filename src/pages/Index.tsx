@@ -91,7 +91,7 @@ const donateItems: DonateItem[] = [
   },
   {
     id: 6,
-    title: 'Легендарный скин',
+    title: 'Временный Администратор',
     description: 'Уникальный облик персонажа',
     price: 599,
     icon: 'Sparkles',
