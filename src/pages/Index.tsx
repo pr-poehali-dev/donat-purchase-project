@@ -55,7 +55,7 @@ const donateItems: DonateItem[] = [
   },
   {
     id: 2,
-    title: 'Набор ресурсов',
+    title: 'Legend Platinum',
     description: '1000 кристаллов + 5000 золота',
     price: 299,
     icon: 'Gem',
